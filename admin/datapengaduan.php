@@ -1,19 +1,11 @@
 <?php
- $koneksi = mysqli_connect("localhost", "root", "", "ujikom_12rpl2_izah");
+$koneksi = mysqli_connect("localhost", "root", "", "ujikom_12rpl2_izah");
 
+$kategori   = isset($_GET['kategori']) ? $_GET['kategori'] : '';
+$tanggal    = isset($_GET['tanggal']) ? $_GET['tanggal'] : '';
+$nis_cari   = isset($_GET['nis']) ? $_GET['nis'] : '';
 
- $nis      = isset($_GET['nis']) ? $_GET['nis'] : '';
- $kategori = isset($_GET['kategori']) ? $_GET['kategori'] : '';
- $tanggal  = isset($_GET['tanggal']) ? $_GET['tanggal'] : '';
-
-
- $sql = "SELECT * FROM input_aspirasi WHERE 1=1";
-
-
-if (!empty($nis)) {
-    $sql .= " AND nis LIKE '%$nis%'";
-}
-
+$sql = "SELECT * FROM input_aspirasi WHERE 1=1";
 
 if (!empty($kategori)) {
     $sql .= " AND id_kategori = '$kategori'";
@@ -23,233 +15,322 @@ if (!empty($tanggal)) {
     $sql .= " AND DATE(tanggal) = '$tanggal'";
 }
 
- $sql .= " ORDER BY tanggal DESC";
+if (!empty($nis_cari)) {
+    $sql .= " AND nis LIKE '%$nis_cari%'";
+}
 
- $query = mysqli_query($koneksi, $sql);
+$sql .= " ORDER BY tanggal DESC";
+$query_tabel = mysqli_query($koneksi, $sql);
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Pengaduan Admin</title>
-    <style>
-      
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f1f8e9; 
-            padding: 20px;
-            margin: 0;
-            color: #444;
-        }
+<meta charset="UTF-8">
+<title>Data Pengaduan Admin</title>
 
-     
-        .container {
-            max-width: 1000px; 
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 2px solid #b2dfdb; 
-            
-           
-            background-image: linear-gradient(#e8f5e9 1px, transparent 1px);
-            background-size: 100% 30px;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-        h2 {
-            text-align: center;
-            color: #558b2f; /* Judul Hijau Tua */
-            margin-top: 0;
-            margin-bottom: 25px;
-            font-size: 24px;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
 
-        /* Kotak Pencarian */
-        .search-box {
-            background-color: #fafafa;
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px dashed #c8e6c9;
-            margin-bottom: 25px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-        }
+body{
+    font-family:'Poppins',sans-serif;
+    background-color:#020617;
+    padding:20px;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
 
-        label {
-            font-size: 12px;
-            font-weight: bold;
-            color: #558b2f;
-            margin-right: 5px;
-            display: block;
-        }
+h2{
+    margin-bottom:5px;
+    text-align:center;
+    font-size:20px;
+    font-weight:700;
+    text-transform:uppercase;
+}
 
-        /* Input & Select */
-        input, select, button {
-            padding: 8px 15px;
-            border: 2px solid #c8e6c9; 
-            border-radius: 20px; 
-            font-size: 12px;
-            background: white;
-            outline: none;
-            color: #555;
-            width: 100%; 
-            box-sizing: border-box;
-        }
+.tombol-kembali{
+    text-align:center;
+    margin-bottom:20px;
+}
+.tombol-kembali a{
+    color:#94a3b8;
+    text-decoration:none;
+    font-size:13px;
+    transition:0.3s;
+}
+.tombol-kembali a:hover{
+    color:#3b82f6;
+}
 
-        input:focus, select:focus {
-            border-color: #66bb6a; 
-        }
+.kotak-data{
+    background:rgba(30,41,59,0.8);
+    backdrop-filter:blur(10px);
+    width:100%;
+    max-width:1000px;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    border:1px solid #3b82f6;
+    overflow-x:auto;
+}
 
-       
-        button[type="submit"] {
-            background-color: #66bb6a;
-            color: white;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 3px 0 #43a047; 
-        }
-        button[type="submit"]:active {
-            transform: translateY(3px);
-            box-shadow: none;
-        }
+.kotak-filter{
+    background-color:rgba(15,23,42,0.5);
+    padding:15px;
+    border-radius:6px;
+    margin-bottom:20px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-end;
+    gap:10px;
+    border:1px solid rgba(255,255,255,0.05);
+}
 
-       
-        button[type="button"] {
-            background-color: #ef5350; 
-            color: white;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.grup-form{
+    display:flex;
+    flex-direction:column;
+}
 
-        /* Styling Tabel */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
+.kotak-filter label{
+    font-weight:600;
+    color:#94a3b8;
+    font-size:11px;
+    margin-bottom:4px;
+    text-transform:uppercase;
+}
 
-        th {
-            background-color: #c8e6c9; 
-            color: #2e7d32; 
-            padding: 12px;
-            text-align: left;
-            font-size: 13px;
-            font-weight: bold;
-            border-bottom: 2px solid #a5d6a7;
-        }
+select,
+input[type="date"],
+input[type="text"]{
+    padding:8px 10px;
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:6px;
+    font-family:'Poppins',sans-serif;
+    background-color:#0f172a;
+    color:#fff;
+    font-size:12px;
+    outline:none;
+    transition:0.3s;
+    min-width:130px;
+}
 
-        td {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            font-size: 12px;
-            color: #444;
-        }
+select:focus,input:focus{
+    border-color:#3b82f6;
+    background-color:#1e293b;
+}
 
-        tr:hover td {
-            background-color: #f1f8e9; /* Highlight baris jadi hijau sangat muda */
-        }
+select option{
+    background-color:#1e293b;
+    color:#fff;
+}
 
-        /* Agar form di search-box rapi berjejer */
-        .form-group {
-            flex: 1;
-            min-width: 150px;
-        }
-    </style>
+.tombol-cari{
+    background-color:#2563eb;
+    color:white;
+    border:none;
+    padding:8px 20px;
+    border-radius:6px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+    font-size:12px;
+}
+
+.tombol-cari:hover{
+    background-color:#3b82f6;
+    transform:translateY(-1px);
+}
+
+.tombol-reset{
+    background-color:transparent;
+    color:#94a3b8;
+    text-decoration:none;
+    border:1px solid rgba(255,255,255,0.1);
+    padding:8px 20px;
+    border-radius:6px;
+    font-weight:600;
+    font-size:12px;
+    transition:0.3s;
+}
+
+.tombol-reset:hover{
+    background-color:rgba(255,255,255,0.05);
+    color:#fff;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:12px;
+    min-width:800px;
+}
+
+th{
+    background-color:#1e293b;
+    color:#94a3b8;
+    padding:10px;
+    text-align:left;
+    border-bottom:2px solid #3b82f6;
+    font-weight:600;
+    text-transform:uppercase;
+    font-size:11px;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+    color:#e2e8f0;
+    vertical-align:top;
+}
+
+tr:hover td{
+    background-color:rgba(59,130,246,0.05);
+}
+
+.badge-menunggu{
+    color:#fbbf24;
+    padding:4px 8px;
+    border-radius:4px;
+    font-size:11px;
+    font-weight:600;
+    border:1px solid rgba(251,191,36,0.3);
+}
+
+.badge-proses{
+    color:#60a5fa;
+    padding:4px 8px;
+    border-radius:4px;
+    font-size:11px;
+    font-weight:600;
+    border:1px solid rgba(96,165,250,0.3);
+}
+
+.badge-selesai{
+    color:#4ade80;
+    padding:4px 8px;
+    border-radius:4px;
+    font-size:11px;
+    font-weight:600;
+    border:1px solid rgba(74,222,128,0.3);
+}
+
+.tombol-detail{
+    background-color:#3b82f6;
+    color:white;
+    text-decoration:none;
+    padding:5px 12px;
+    border-radius:4px;
+    font-size:11px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.tombol-detail:hover{
+    background-color:#2563eb;
+    box-shadow:0 0 10px rgba(59,130,246,0.3);
+}
+
+.data-kosong{
+    text-align:center;
+    color:#64748b;
+    padding:30px;
+    font-style:italic;
+}
+</style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Data Pengaduan (Admin)</h2>
+<h2>HISTORI PENGADUAN</h2>
 
-  
-    <div class="search-box">
-        <form method="GET" style="display: flex; gap: 15px; flex-wrap: wrap; width: 100%;">
-            
-            <div class="form-group">
-                <label>Cari NIS:</label>
-                <input type="text" name="nis" value="<?= $nis; ?>" placeholder="Masukkan NIS...">
-            </div>
-
-            <div class="form-group">
-                <label>Kategori:</label>
-                <select name="kategori">
-                    <option value="">-- Semua --</option>
-                    <option value="1" <?= ($kategori=='1')?'selected':''; ?>>Lingkungan</option>
-                    <option value="2" <?= ($kategori=='2')?'selected':''; ?>>Fasilitas</option>
-                    <option value="3" <?= ($kategori=='3')?'selected':''; ?>>Pelayanan</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Tanggal:</label>
-                <input type="date" name="tanggal" value="<?= $tanggal; ?>">
-            </div>
-
-            <div class="form-group" style="flex: 0 0 auto; margin-top: 18px;">
-                <button type="submit">Cari</button>
-                <a href="datapengaduan.php">
-                    <button type="button">Reset</button>
-                </a>
-            </div>
-        </form>
-    </div>
-
- 
-    <table>
-        <tr>
-            <th width="5%">No</th>
-            <th width="15%">Tanggal</th>
-            <th width="10%">Kategori</th>
-            <th width="10%">NIS</th>
-            <th width="15%">Lokasi</th>
-            <th width="25%">Keterangan</th>
-            <th width="10%">Status</th>
-            <th width="10%">Detail</th>
-        </tr>
-
-    <?php
-    $no = 1;
-    if(mysqli_num_rows($query) > 0) {
-        while ($data = mysqli_fetch_assoc($query)){
-    ?>
-        <tr>
-            <td><?= $no++; ?></td>
-            <td><?= date('d-m-Y', strtotime($data['tanggal'])); ?></td>
-            <td><?= $data['id_kategori']; ?></td>
-            <td><?= $data['nis']; ?></td>
-            <td><?= $data['lokasi']; ?></td>
-            <td><?= $data['keterangan']; ?></td>
-            <td><?= $data['status']; ?></td>
-            <td>
-              
-                <a href="detailadmin.php?id=<?= $data['id_pelaporan']; ?>" style="text-decoration: none;">
-                    <button type="button" style="width: auto; padding: 5px 15px; font-size: 11px;">Detail</button>
-                </a>
-            </td>
-        </tr>
-    <?php }
-    } else {
-        echo "<tr><td colspan='8' style='text-align:center; padding: 20px; color: #888;'>Data tidak ditemukan.</td></tr>";
-    }
-    ?>
-    </table>
-
-    <div style="text-align: right; margin-top: 20px;">
-        <a href="dashboardadmin.php" style="text-decoration: none; color: #666; font-size: 12px;">← Kembali ke Dashboard</a>
-    </div>
+<div class="tombol-kembali">
+    <a href="dashboardadmin.php">&larr; Kembali ke Dashboard Admin</a>
 </div>
 
+<div class="kotak-data">
+
+<div class="kotak-filter">
+<form method="GET" style="display:contents;">
+
+<div class="grup-form">
+<label>NIS</label>
+<input type="text" name="nis" placeholder="Cari NIS..." value="<?= $nis_cari; ?>">
+</div>
+
+<div class="grup-form">
+<label>Kategori</label>
+<select name="kategori">
+<option value="">-- Semua --</option>
+<option value="1" <?= ($kategori=='1')?'selected':''; ?>>Lingkungan</option>
+<option value="2" <?= ($kategori=='2')?'selected':''; ?>>Fasilitas</option>
+<option value="3" <?= ($kategori=='3')?'selected':''; ?>>Pelayanan</option>
+</select>
+</div>
+
+<div class="grup-form">
+<label>Tanggal</label>
+<input type="date" name="tanggal" value="<?= $tanggal; ?>">
+</div>
+
+<button type="submit" class="tombol-cari">Cari</button>
+<a href="datapengaduan.php" class="tombol-reset">Reset</a>
+
+</form>
+</div>
+
+<table>
+<thead>
+<tr>
+<th>No</th>
+<th>Tanggal</th>
+<th>Kategori</th>
+<th>NIS</th>
+<th>Lokasi</th>
+<th>Keterangan</th>
+<th>Status</th>
+<th>Aksi</th>
+</tr>
+</thead>
+<tbody>
+
+<?php
+$no = 1;
+
+if (mysqli_num_rows($query_tabel) == 0) {
+    echo "<tr><td colspan='8' class='data-kosong'>Tidak ada data ditemukan.</td></tr>";
+} else {
+    while ($data = mysqli_fetch_assoc($query_tabel)) {
+
+        $status_class = '';
+        if ($data['status'] == 'Menunggu') $status_class = 'badge-menunggu';
+        elseif ($data['status'] == 'Proses') $status_class = 'badge-proses';
+        elseif ($data['status'] == 'Selesai') $status_class = 'badge-selesai';
+?>
+
+<tr>
+<td><?= $no++; ?></td>
+<td><?= date('d-m-Y H:i', strtotime($data['tanggal'])); ?></td>
+<td><?= $data['id_kategori']; ?></td>
+<td><?= $data['nis']; ?></td>
+<td><?= $data['lokasi']; ?></td>
+<td><?= $data['keterangan']; ?></td>
+<td><span class="<?= $status_class; ?>"><?= $data['status']; ?></span></td>
+<td>
+<a href="detailadmin.php?id=<?= $data['id_pelaporan']; ?>" class="tombol-detail">
+Detail
+</a>
+</td>
+</tr>
+
+<?php } } ?>
+
+</tbody>
+</table>
+
+</div>
 </body>
-</html>
+</html> 

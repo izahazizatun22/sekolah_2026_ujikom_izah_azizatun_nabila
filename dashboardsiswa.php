@@ -2,182 +2,242 @@
 session_start();
 if (!isset($_SESSION['nis'])) {
     header("Location: indexlogin.php"); 
+    exit;
 }
-
- $username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Siswa';
+$username = isset($_SESSION['username']) ? $_SESSION['username'] : 'Siswa';
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Siswa</title>
-  
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif; /* Font diganti Poppins */
-            background-color: #e3f2fd; /* Biru pastel terang */
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Siswa</title>
 
-       
-        .container {
-            max-width: 900px;
-            margin: 50px auto; 
-            padding: 20px;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-        /*  Sapaan */
-        .header {
-            background-color: white;
-            padding: 25px;
-            border-radius: 15px; 
-            margin-bottom: 25px;
-            border-left: 6px solid #29b6f6;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            position: relative; 
-        }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .header h2 {
-            margin: 0;
-            color: #0277bd; 
-            font-weight: 700;
-        }
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #020617; 
+    min-height: 100vh;
+    color: #fff;
+    padding: 20px;
+}
 
-        .header p {
-            margin: 8px 0 0;
-            color: #666;
-        }
+.container {
+    max-width: 1000px;
+    margin: 30px auto;
+}
 
-        /* Style Tombol Logout */
-        .btn-logout {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            background-color: #ef5350; 
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px; 
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: 0 3px 0 #d32f2f;
-        }
+.header {
+    background-color: #1e293b;
+    padding: 20px 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid #3b82f6;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
-        .btn-logout:hover {
-            background-color: #e53935;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 0 #d32f2f;
-        }
+/* GANTI header-top */
+.header-atas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* GANTI brand */
+.logo-sekolah {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* GANTI brand-logo */
+.logo-img {
+    width: 35px; 
+    height: auto;
+}
+
+/* GANTI brand-text */
+.nama-sekolah h4 {
+    color: #ffffff;
+    font-size: 12px; 
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.nama-sekolah span {
+    color: #94a3b8;
+    font-size: 10px; 
+    font-weight: 500;
+}
+
+.btn-logout {
+    background-color: transparent;
+    color: #f87171;
+    padding: 6px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    border: 2px solid #f87171;
+    transition: all 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #f87171;
+    color: white;
+}
+
+/* GANTI divider */
+.garis {
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* GANTI header-content */
+.judul-dashboard {
+    width: 100%;
+    text-align: center;
+}
+
+.judul-dashboard h2 {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.judul-dashboard p {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* GANTI pembungkus-menu */
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* GANTI menu-box */
+.menu-item {
+    background-color: rgba(30, 41, 59, 0.5);
+    backdrop-filter: blur(5px);
+    flex: 1;
+    min-width: 200px;
+    padding: 20px 15px;
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    transition: all 0.2s ease;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-item:hover {
+    background-color: rgba(30, 41, 59, 0.8);
+    border-color: #3b82f6;
+    transform: translateY(-3px);
+}
+
+.icon {
+    width: 45px;
+    height: 45px;
+    color: white;
+    font-size: 20px;
+    line-height: 45px;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* warna icon tetap sama */
+.box-buat .icon { background-color: #2563eb; }
+.box-cari .icon { background-color: #059669; }
+.box-pw .icon { background-color: #d97706; }
+
+.menu-item h3 { 
+    margin: 0 0 5px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 15px;
+}
         
-        .btn-logout:active {
-            transform: translateY(1px);
-            box-shadow: 0 1px 0 #d32f2f;
-        }
-
-        /* Pembungkus Menu */
-        .menu-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        /* Style Kotak Menu */
-        .menu-box {
-            background-color: white;
-            flex: 1;
-            min-width: 250px;
-            padding: 30px 20px;
-            border-radius: 15px;
-            text-align: center;
-            text-decoration: none;
-            color: #444;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid transparent; /* Untuk efek hover border */
-        }
-
-        .menu-box:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            border-color: #81d4fa; /* Border biru muda saat hover */
-        }
-
-        /* Ikon Bulat */
-        .icon {
-            width: 70px;
-            height: 70px;
-            background-color: #29b6f6; 
-            color: white;
-            font-size: 28px;
-            line-height: 70px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.3s;
-        }
-
-        /* Warna per Menu */
-       
-        .box-buat .icon { background-color: #4fc3f7; box-shadow: 0 5px 0 #29b6f6; }
-    
-        .box-cari .icon { background-color: #0288d1; box-shadow: 0 5px 0 #01579b; }
-        
-        /* Box 3: Ungu/Indigo (variasi agar tidak monoton) */
-        .box-pw .icon { background-color: #5c6bc0; box-shadow: 0 5px 0 #3949ab; }
-
-        .menu-box h3 { 
-            margin: 0 0 10px; 
-            color: #0277bd;
-            font-weight: 600;
-        }
-        .menu-box p { margin: 0; font-size: 14px; color: #777; }
-
-    </style>
+.menu-item p { 
+    margin: 0;
+    font-size: 11px;
+    color: #94a3b8;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container">
+<div class="container">
         
-        <!-- Sapaan -->
-        <div class="header">
-            
+    <div class="header">
+
+        <div class="header-atas">
+            <div class="logo-sekolah">
+                <img src="logo_mutu_png_transparant-removebg-preview-1.png" class="logo-img">
+                <div class="nama-sekolah">
+                    <h4>SMK TI Muhammadiyah</h4>
+                    <span>Cikampek</span>
+                </div>
+            </div>
             <a href="logout.php" class="btn-logout">Logout</a>
-            
+        </div>
+
+        <div class="garis"></div>
+
+        <div class="judul-dashboard">
             <h2>Dashboard Siswa</h2>
-    
-            <p>Selamat datang, <b><?php echo htmlspecialchars($username); ?></b></p>
+            <p>Selamat datang, <b><?= htmlspecialchars($username); ?></b></p>
         </div>
+    </div>
 
-    
-        <div class="menu-wrapper">
+    <div class="menu-container">
             
-            <a href="buatpengaduan.php" class="menu-box box-buat">
-                <div class="icon">📝</div>
-                <h3>Buat Pengaduan</h3>
-                <p>Klik untuk mengirimkan keluhan baru.</p>
-            </a>
+        <a href="buatpengaduan.php" class="menu-item box-buat">
+            <div class="icon">📝</div>
+            <h3>Form Pengaduan</h3>
+            <p>Kirim keluhan baru.</p>
+        </a>
 
-            <a href="datapengaduan.php" class="menu-box box-cari">
-                <div class="icon">🔍</div>
-                <h3>Data pengaduan</h3>
-                <p>Lihat data yang sudah anda input</p>
-            </a>
+        <a href="datapengaduan.php" class="menu-item box-cari">
+            <div class="icon">🔍</div>
+            <h3>Histori Pengaduan</h3>
+            <p>Riwayat laporan Anda.</p>
+        </a>
 
-            <a href="gantipassword.php" class="menu-box box-pw">
-                <div class="icon">🔑</div>
-                <h3>Ganti Password</h3>
-                <p>Perbarui kata sandi akun Anda.</p>
-            </a>
-
-        </div>
+        <a href="gantipassword.php" class="menu-item box-pw">
+            <div class="icon">🔑</div>
+            <h3>Ganti Password</h3>
+            <p>Perbarui kata sandi.</p>
+        </a>
 
     </div>
+
+</div>
 
 </body>
 </html>

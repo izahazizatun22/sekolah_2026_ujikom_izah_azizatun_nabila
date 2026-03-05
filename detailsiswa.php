@@ -39,136 +39,151 @@ if (!$data) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Pengaduan</title>
+    <title>DETAIL PENGADUAN SISWA</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #e3f2fd;
+            background-color: #020617; 
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
-            color: #444;
+            color: #fff;
         }
 
         
         .detail-card {
-            background: white;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
             width: 100%;
-            max-width: 600px;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 2px solid #bbdefb; 
+            max-width: 380px; 
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            border: 1px solid #3b82f6;
         }
 
         h2 {
             text-align: center;
-            color: #1565c0; /* Biru tua */
+            color: #ffffff;
             margin-top: 0;
-            margin-bottom: 25px;
-            font-size: 24px;
+            margin-bottom: 5px;
+            font-size: 18px; 
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        /* Tabel Styling */
+        .link-kembali {
+            text-align: center;
+            margin-bottom: 15px; 
+        }
+        .link-kembali a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 12px; 
+            transition: color 0.3s;
+        }
+        .link-kembali a:hover {
+            color: #3b82f6;
+        }
+
         table {
             width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
+            border-collapse: separate;
+            border-spacing: 0 6px; 
+            font-size: 12px; 
         }
 
         td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #e3f2fd;
-            vertical-align: top;
+            padding: 10px 12px; 
+            vertical-align: middle;
         }
 
-        /* Kolom Label (Kiri) */
+        /* label kiri */
         td:first-child {
-            background-color: #e3f2fd; /* Background biru muda */
-            color: #1565c0;
-            font-weight: 600; /* Semi-bold */
+            background-color: #1e293b; 
+            color: #94a3b8;
+            font-weight: 600;
             width: 35%;
-            border-radius: 8px;
+            border-left: 3px solid #3b82f6; 
+            border-radius: 4px 0 0 4px; 
+            
+            text-transform: uppercase;
+            font-size: 10px; 
+            letter-spacing: 0.5px;
         }
 
         /* Kolom Isi (Kanan) */
         td:last-child {
-            color: #555;
+            background-color: rgba(15, 23, 42, 0.5); 
+            color: #e2e8f0;
+            border-radius: 0 4px 4px 0;
         }
 
-        /* Styling Status Badge */
         .status-menunggu, .status-proses, .status-selesai {
             display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 10px; /* Font diperkecil */
             text-transform: uppercase;
+            border: 1px solid;
         }
 
         .status-menunggu {
-            background-color: #fff3e0; /* Oranye pastel */
-            color: #ef6c00;
+            background-color: transparent; 
+            color: #fbbf24;
+            border-color: rgba(251, 191, 36, 0.3);
         }
 
         .status-proses {
-            background-color: #e3f2fd; /* Biru pastel */
-            color: #1565c0;
+            background-color: transparent; 
+            color: #60a5fa;
+            border-color: rgba(96, 165, 250, 0.3);
         }
 
         .status-selesai {
-            background-color: #e8f5e9; /* Hijau pastel */
-            color: #2e7d32;
+            background-color: transparent; 
+            color: #4ade80;
+            border-color: rgba(74, 222, 128, 0.3);
         }
 
-        /* Feedback Box */
         .feedback-text {
-            background-color: #fafafa;
-            padding: 10px;
-            border-left: 4px solid #90caf9;
-            border-radius: 0 5px 5px 0;
+            background-color: rgba(15, 23, 42, 0.8);
+            padding: 8px; 
+            border-left: 3px solid #3b82f6;
+            border-radius: 0 4px 4px 0;
             font-style: italic;
-            color: #666;
+            color: #cbd5e1;
+            font-size: 11px; 
+            line-height: 1.4;
         }
 
-        /* Tombol Kembali */
-        .btn-kembali {
-            display: block;
-            width: 100%;
-            text-align: center;
-            margin-top: 25px;
-            padding: 12px;
-            background-color:rgb(80, 219, 253);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: background-color 0.3s;
-            box-shadow: 0 4px 0 #0d47a1;
-        }
-
-        .btn-kembali:hover {
-            background-color: #1976d2;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 0 #0d47a1;
-        }
-        
-        .btn-kembali:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #0d47a1;
+        .kosong {
+            color: #64748b;
+            font-style: italic;
+            font-size: 11px; 
         }
     </style>
 </head>
 <body>
 
 <div class="detail-card">
-    <h2>Detail Pengaduan Anda</h2>
+    <h2>Detail Pengaduan</h2>
+    
+    <div class="link-kembali">
+        <a href="datapengaduan.php">&larr; Kembali ke Histori</a>
+    </div>
 
     <table>
         <tr>
@@ -208,20 +223,18 @@ if (!$data) {
             </td>
         </tr>
         <tr>
-            <td>Feedback Admin</td>
+            <td>Feedback</td>
             <td>
                 <?php
                 if (!empty($data['feedback']) && $data['feedback'] != '-') {
                     echo "<div class='feedback-text'>" . nl2br($data['feedback']) . "</div>";
                 } else {
-                    echo "<i>Belum ada tanggapan dari admin.</i>";
+                    echo "<span class='kosong'>Belum ada tanggapan.</span>";
                 }
                 ?>
             </td>
         </tr>
     </table>
-
-    <a href="datapengaduan.php" class="btn-kembali">Kembali</a>
 </div>
 
 </body>

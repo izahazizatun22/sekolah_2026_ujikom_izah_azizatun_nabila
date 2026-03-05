@@ -1,182 +1,173 @@
+<?php
+include 'koneksi.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Pengaduan</title>
-    <!-- Import Font Poppins -->
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Tema Pastel Biru & Kuning */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #e3f2fd; /* Biru pastel lembut */
+            background-color: #020617;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
             padding: 20px;
-            box-sizing: border-box;
         }
 
         .container {
-            background: white;
-            padding: 25px; /* Padding dikurangi dari 40px */
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 20px;
             width: 100%;
-            max-width: 350px; /* Lebar dikurangi dari 450px */
+            max-width: 300px;
             text-align: center;
-            border-radius: 15px; /* Sudut disesuaikan */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 2px solid #b3e5fc;
-            animation: fadeIn 0.8s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            border-radius: 12px;
+            border: 1px solid #3b82f6;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
 
         h1 {
-            font-size: 18px; /* Ukuran judul dikurangi */
-            margin-bottom: 20px; /* Jarak bawah dikurangi */
-            color: #0277bd;
-            line-height: 1.3;
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
-        /* Tombol Kembali */
         .btn-back {
             display: inline-block;
-            margin-bottom: 15px;
-            color: #0277bd;
+            margin-bottom: 10px;
+            color: #94a3b8;
             text-decoration: none;
-            font-size: 12px; /* Font dikurangi */
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-        .btn-back:hover {
-            color: #01579b;
-            text-decoration: underline;
+            font-size: 11px;
+            font-weight: 500;
         }
 
-        /* Grup Form */
         .form-group {
-            margin-bottom: 15px; /* Jarak antar form dikurangi */
+            margin-bottom: 10px;
             text-align: left;
         }
 
-        /* Label Bold */
         label {
             display: block;
-            margin-bottom: 5px; /* Jarak label ke input dikurangi */
+            margin-bottom: 3px;
             font-weight: 600;
-            color: #0277bd;
-            font-size: 12px; /* Font label dikurangi */
+            color: #94a3b8;
+            font-size: 10px;
+            text-transform: uppercase;
         }
 
-        /* Input & Select */
         input[type="text"], 
         textarea,
         select {
-            width: 100%;                
-            padding: 8px 10px; /* Padding input dikurangi */
-            border: 2px solid #b3e5fc;
-            border-radius: 8px;
-            box-sizing: border-box;     
+            width: 100%;
+            padding: 8px 10px;
+            background-color: rgba(15, 23, 42, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
             font-family: 'Poppins', sans-serif;
-            font-size: 12px; /* Font input dikurangi */
-            background-color: #fff;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            font-size: 12px;
+            color: #ffffff;
         }
 
-        /* Efek Fokus */
         input:focus, select:focus, textarea:focus {
-            border-color: #29b6f6;
+            border-color: #3b82f6;
+            background-color: rgba(15, 23, 42, 0.8);
             outline: none;
-            box-shadow: 0 0 0 2px rgba(41, 182, 246, 0.2); /* Bayangan dikurangi */
+            box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2);
         }
 
-        /* Textarea ukuran */
         textarea {
             resize: vertical;
-            min-height: 60px; /* Tinggi minimal dikurangi */
+            min-height: 50px;
         }
 
-        /* Tombol Submit */
         button {
-            background-color: #fff59d;
-            color: #f57f17;
+            background-color: #2563eb;
+            color: white;
             border: none;
-            padding: 10px 15px; /* Padding tombol dikurangi */
-            width: 100%;                
-            border-radius: 50px;
-            font-weight: bold;
+            padding: 8px 15px;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 13px; /* Font tombol dikurangi */
+            font-size: 12px;
             font-family: 'Poppins', sans-serif;
-            transition: all 0.3s;
             margin-top: 5px;
-            box-shadow: 0 3px 0 #fdd835; /* Bayangan dikurangi */
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
         }
 
-        button:hover {
-            background-color: #fff176;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 0 #fdd835;
-        }
-
-        button:active {
-            transform: translateY(2px);
-            box-shadow: 0 1px 0 #fdd835;
-        }
+        button:hover { background-color: #3b82f6; }
     </style>
 </head>
 <body>
     
 <div class="container">
-    <a href="index.php" class="btn-back">&larr; Kembali ke Menu Utama</a>
+    <a href="dashboardsiswa.php" class="btn-back">&larr; Kembali ke dashboardsiswa</a>
 
-    <h1>FORM PENGADUAN MUTU</h1>
+    <h1>Form Pengaduan</h1>
 
     <form action="prosespengaduan.php" method="POST">
         
         <div class="form-group">
-            <label for="tanggal">TANGGAL</label>
+            <label>TANGGAL</label>
             <input type="text" 
-                   id="tanggal"
                    value="<?= date('Y-m-d H:i:s'); ?>" 
-                   readonly style="background-color: #f1f8e9; cursor: not-allowed;">
+                   readonly 
+                   style="background-color: rgba(15, 23, 42, 0.2); cursor: not-allowed; border-style: dashed;">
         </div>
 
         <div class="form-group">
-            <label for="nis">NIS</label>
-            <input type="text" 
-                   name="NIS" id="nis" placeholder="Masukkan NIS" required />
+            <label>NIS</label>
+            <input type="text" name="NIS" placeholder="Masukkan NIS" required />
         </div>
 
         <div class="form-group">
-            <label for="lokasi">Lokasi</label>
-            <input type="text" 
-                   name="lokasi" id="lokasi" placeholder="Contoh: Lab Komputer" required />
+            <label>Lokasi</label>
+            <input type="text" name="lokasi" placeholder="Contoh: Lab Komputer" required />
         </div>
 
         <div class="form-group">
-            <label for="kategori">KATEGORI</label>
-            <select name="kategori" id="kategori" required>
-                <option value="1">Lingkungan</option>
-                <option value="2">Fasilitas</option>
-                <option value="3">Pelayanan</option>
+            <label>KATEGORI</label>
+            <select name="kategori" required>
+                <option value="">-- Pilih Kategori --</option>
+
+                <?php
+                $query = mysqli_query($koneksi, "SELECT * FROM kategori");
+
+                if (!$query) {
+                    echo "<option value=''>Tabel kategori tidak ditemukan</option>";
+                } else {
+                    if (mysqli_num_rows($query) > 0) {
+                        while ($data = mysqli_fetch_assoc($query)) {
+                            echo "<option value='".$data['id_kategori']."'>".$data['ket_kategori']."</option>";
+                        }
+                    } else {
+                        echo "<option value=''>Belum ada kategori</option>";
+                    }
+                }
+                ?>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="keterangan">Keterangan</label>
-            <textarea name="keterangan" 
-                      id="keterangan" placeholder="Jelaskan detail masalah Anda" required></textarea>
+            <label>Keterangan</label>
+            <textarea name="keterangan" placeholder="Jelaskan detail masalah" required></textarea>
         </div>
             
-        <button type="submit" name="kirim">KIRIM PENGADUAN</button>
+        <button type="submit" name="kirim">KIRIM</button>
     </form>
 </div>
 

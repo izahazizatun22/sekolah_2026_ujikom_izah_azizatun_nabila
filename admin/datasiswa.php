@@ -1,175 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Data Siswa</title>
-    <style>
-        
-        body {
-            background-color: #f1f8e9; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center; /* Tambahkan ini untuk posisi tengah vertikal */
-            height: 100vh; /* Tinggi layar penuh */
-            margin: 0;
-            color: #444;
-            font-size: 12px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Input Data Siswa</title>
 
-       
-        .login-box {
-            background-color: white;
-            width: 100%;
-            max-width: 320px; /* Diperbesar sedikit dari 260px */
-            padding: 20px; 
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border: 2px solid #b2dfdb;
-            
-            /* Garis notebook */
-            background-image: linear-gradient(#e8f5e9 1px, transparent 1px);
-            background-size: 100% 22px; 
-            
-            text-align: center;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-        h2 {
-            margin: 0 0 15px 0; 
-            color: #558b2f; 
-            font-size: 18px; 
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
 
-        label {
-            display: block;
-            text-align: left;
-            margin-left: 5px;
-            margin-bottom: 2px;
-            font-weight: bold;
-            color: #558b2f; 
-            font-size: 11px; 
-        }
+body{
+    background-color:#020617;
+    font-family:'Poppins',sans-serif;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100vh;
+    color:#fff;
+    padding:20px;
+}
 
-        
-        input[type="text"], 
-        input[type="password"],
-        select {
-            width: 100%;
-            padding: 6px 10px; 
-            box-sizing: border-box;
-            border: 2px solid #c8e6c9;
-            border-radius: 20px; 
-            font-size: 12px; 
-            text-align: center;
-            background-color: white; 
-            transition: border-color 0.3s;
-            margin-bottom: 8px; 
-            font-family: inherit;
-        }
+.kotak-form{
+    background:rgba(30,41,59,0.7);
+    backdrop-filter:blur(10px);
+    width:100%;
+    max-width: 450px; 
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    border: 1px solid #3b82f6;
+}
 
-        input:focus, select:focus {
-            border-color: #66bb6a;
-            outline: none;
-            background-color: #fafafa;
-        }
+h2{
+    text-align: center; /* Tengah atas */
+    margin-bottom: 20px;
+    font-size: 18px; 
+    font-weight:700;
+    text-transform:uppercase;
+    color: #fff;
+}
 
-        /* Tombol Submit */
-        button[type="submit"] {
-            width: 100%;
-            padding: 8px; 
-            background-color: #66bb6a; 
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 3px 0 #43a047;
-            transition: all 0.2s;
-            margin-top: 5px;
-        }
+.tombol-kembali{
+    text-align:center;
+    margin-bottom: 20px;
+}
+.tombol-kembali a{
+    color:#94a3b8;
+    text-decoration:none;
+    font-size:11px;
+    transition:0.3s;
+}
+.tombol-kembali a:hover{
+    color:#3b82f6;
+}
 
-        button[type="submit"]:active {
-            transform: translateY(3px);
-            box-shadow: 0 0 0 #43a047; 
-        }
+/* Layout Form Horizontal */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Jarak antar baris */
+}
 
-        /* Tombol Lihat Data (Baru) */
-        .btn-lihat {
-            display: block;
-            text-decoration: none;
-            width: 100%;
-            padding: 8px;
-            background-color: white; 
-            color: #558b2f;
-            border: 2px solid #66bb6a;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 10px; /* Jarak dengan tombol kirim */
-            box-sizing: border-box;
-        }
+.form-group {
+    display: flex; /* Label & Input sejajar */
+    align-items: center;
+}
 
-        .btn-lihat:hover {
-            background-color: #e8f5e9;
-        }
+label {
+    width: 100px; 
+    font-weight: 600;
+    color: #94a3b8;
+    font-size: 10px; 
+    text-transform: uppercase;
+    padding-right: 10px;
+}
 
-    </style>
+input[type="text"],
+input[type="password"],
+select {
+    flex-grow: 1; /* Input ngambil sisa ruang */
+    padding: 8px 10px;
+    background-color: rgba(15,23,42,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px; 
+    font-size: 11px; 
+    color: #fff;
+    font-family: 'Poppins',sans-serif;
+    transition: 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #3b82f6;
+    background-color: rgba(15,23,42,0.8);
+    outline: none;
+}
+
+select option {
+    background-color: #1e293b;
+    color: #fff;
+}
+
+/* Bagian Tombol Sejajar dengan Input  */
+.form-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 100px; /* Samain dengan lebar label */
+    margin-top: 5px;
+}
+
+button[type="submit"]{
+    padding: 8px;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #3b82f6;
+}
+
+.tombol-lihat {
+    display: inline-block;
+    text-decoration: none;
+    background-color: transparent;
+    color: #64748b;
+    border: none;
+    font-size: 10px;
+    font-weight: 600;
+    text-align: center;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.tombol-lihat:hover {
+    color: #94a3b8;
+}
+</style>
 </head>
+
 <body>
 
-<div class="login-box">
-    <h2>Input Data Siswa</h2>
+<div class="kotak-form">
     
-    <!-- Pastikan action mengarah ke file proses yang benar -->
+    <div class="tombol-kembali">
+        <a href="dashboardadmin.php">&larr; Kembali ke Dashboard</a>
+    </div>
+
+
+    <h2>Input Data Siswa</h2>
+
     <form action="koneksidata.php" method="POST">
-        <div>
+
+        <div class="form-group">
             <label>NIS</label>
-            <input type="text" name="nis" required>
+            <input type="text" name="nis" placeholder="Masukkan NIS" required>
         </div>
 
-        <div>
-            <label>USERNAME</label>
-            <input type="text" name="username" required>
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Buat Username" required>
         </div>
 
-        <div>
-            <label>PASSWORD</label>
-            <input type="password" name="password" required>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Buat Password" required>
         </div>
 
-        <div>
-            <label>NAMA</label>
-            <input type="text" name="nama" required>
+        <div class="form-group">
+            <label>Nama</label>
+            <input type="text" name="nama" placeholder="Nama Lengkap" required>
         </div>
 
-        <div>
-            <label>ROLE</label>
+        <div class="form-group">
+            <label>Role</label>
             <select name="role">
                 <option value="siswa">Siswa</option>
                 <option value="admin">Admin</option>
             </select>
         </div>
 
-        <div>
-            <label>KELAS</label>
-            <input type="text" name="kelas" required>
+        <div class="form-group">
+            <label>Kelas</label>
+            <input type="text" name="kelas" placeholder="Contoh: XII RPL 2" required>
         </div>
 
-        <div>
-            <label>JURUSAN</label>
-            <input type="text" name="jurusan" required>
+        <div class="form-group">
+            <label>Jurusan</label>
+            <input type="text" name="jurusan" placeholder="Jurusan" required>
         </div>
-        
-        <button type="submit">Kirim Data</button>
-        
-        <!-- Tombol baru untuk melihat data -->
-        <a href="tampildata.php" class="btn-lihat">Lihat Data Siswa</a>
+
+        <!-- Tombol Aksi (Sejajar dengan Input) -->
+        <div class="form-actions">
+            <button type="submit">SIMPAN DATA</button>
+            <a href="tampildata.php" class="tombol-lihat">Lihat Data Siswa</a>
+        </div>
+
     </form>
 </div>
 

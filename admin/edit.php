@@ -16,14 +16,10 @@ if (!$row) {
 }
 
 if (isset($_POST['submit'])) {
-    // Perbaikan: Ambil data sesuai 'name' di input HTML
-    // Saya asumsikan input 'nama' mengisi kolom 'username' di database
     $nama_baru = $_POST['nama'];
     $kelas = $_POST['kelas'];
     $jurusan = $_POST['jurusan'];
 
-    // Perbaikan: Gunakan variabel yang benar di SQL
-    // Jika di database kolomnya bernama 'username', kita update username = '$nama_baru'
     $query = "UPDATE tbuser SET username='$nama_baru', kelas='$kelas', jurusan='$jurusan' WHERE nis='$nis'";
     
     if (mysqli_query($koneksi, $query)) {
@@ -41,99 +37,112 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Data Siswa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- CSS TEMA HIJAU PASTEL NOTEBOOK --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f1f8e9; /* Background Hijau Muda */
+            font-family: 'Poppins', sans-serif;
+            background-color: #020617;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            color: #444;
+            color: #fff;
         }
 
         .edit-box {
-            background-color: white;
+            background: rgba(30, 41, 59, 0.7); 
+            backdrop-filter: blur(10px);
             width: 100%;
-            max-width: 400px; /* Lebar kotak */
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border: 2px solid #b2dfdb;
-            
-            /* Efek Garis Notebook */
-            background-image: linear-gradient(#e8f5e9 1px, transparent 1px);
-            background-size: 100% 30px;
-            
+            max-width: 320px;
+            padding: 25px;
+            border-radius: 8px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            border: 1px solid #3b82f6; 
             text-align: center;
         }
 
         h2 {
             margin-top: 0;
-            margin-bottom: 25px;
-            color: #558b2f;
+            margin-bottom: 5px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .link-kembali {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .link-kembali a {
+            color: #94a3b8; 
+            text-decoration: none;
+            font-size: 12px;
+            transition: color 0.3s;
+        }
+        .link-kembali a:hover {
+            color: #3b82f6; 
+        }
+
+        form {
+            text-align: left;
         }
 
         label {
             display: block;
-            text-align: left;
-            margin-left: 10px;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #558b2f;
-            font-size: 12px;
+            margin-bottom: 4px;
+            font-weight: 600;
+            color: #94a3b8;
+            font-size: 10px;
+            text-transform: uppercase;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 12px;
+            padding: 8px 10px;
             box-sizing: border-box;
-            border: 2px solid #c8e6c9;
-            border-radius: 50px; /* Bentuk Pill */
-            font-size: 14px;
-            text-align: center;
-            background-color: white;
-            transition: border-color 0.3s;
-            margin-bottom: 15px;
-            font-family: inherit;
+            background-color: rgba(15, 23, 42, 0.5); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px; 
+            font-size: 12px;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 12px; 
+            transition: all 0.3s ease;
         }
 
         input:focus {
-            border-color: #66bb6a;
+            border-color: #3b82f6; 
+            background-color: rgba(15, 23, 42, 0.8);
             outline: none;
-            background-color: #fafafa;
         }
 
         button[type="submit"] {
             width: 100%;
-            padding: 12px;
-            background-color: #66bb6a;
+            padding: 10px;
+            background-color: #2563eb;
             color: white;
             border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #43a047;
-            transition: all 0.2s;
-            margin-top: 10px;
-        }
-
-        button[type="submit"]:active {
-            transform: translateY(4px);
-            box-shadow: 0 0 0 #43a047;
-        }
-
-        .back-link {
-            display: block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #888;
+            border-radius: 6px;
             font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 5px;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
         }
-        .back-link:hover { color: #558b2f; }
+
+        button[type="submit"]:hover {
+            background-color: #3b82f6;
+            transform: translateY(-1px);
+        }
     </style>
 </head>
 <body>
@@ -141,22 +150,23 @@ if (isset($_POST['submit'])) {
 <div class="edit-box">
     <h2>Edit Data Siswa</h2>
     
-   
+    <div class="link-kembali">
+        <a href="tampildata.php">&larr; Batal / Kembali</a>
+    </div>
+
     <form method="POST">
         
         <label>Nama / Username</label>
-        <input type="text" name="nama" value="<?php echo $row['username']; ?>" placeholder="Masukkan Nama">
+        <input type="text" name="nama" value="<?php echo $row['username']; ?>" placeholder="Masukkan Nama" required>
         
         <label>Kelas</label>
-        <input type="text" name="kelas" value="<?php echo $row['kelas']; ?>" placeholder="Masukkan Kelas">
+        <input type="text" name="kelas" value="<?php echo $row['kelas']; ?>" placeholder="Masukkan Kelas" required>
         
         <label>Jurusan</label>
-        <input type="text" name="jurusan" value="<?php echo $row['jurusan']; ?>" placeholder="Masukkan Jurusan">
+        <input type="text" name="jurusan" value="<?php echo $row['jurusan']; ?>" placeholder="Masukkan Jurusan" required>
 
-        <button type="submit" name="submit">Update Data</button>
+        <button type="submit" name="submit">UPDATE DATA</button>
     </form>
-
-    <a href="tampildata.php" class="back-link">Batal / Kembali</a>
 </div>
 
 </body>
