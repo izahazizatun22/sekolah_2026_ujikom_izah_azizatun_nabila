@@ -14,8 +14,8 @@ if (isset($_POST['simpan'])) {
 
     // Logika: Jika feedback kosong, isi otomatis
     if (empty(trim($feedback))) {
-        $feedback = "Terimakasih telah menghubungi kami mohon tunggu kami akan segara proses bisagasih";
-    }
+    $feedback = "-";
+}
 
     mysqli_query($koneksi, "UPDATE `input_aspirasi` SET status='$status', feedback='$feedback' WHERE id_pelaporan='$id'");
 
@@ -39,7 +39,6 @@ if(!$data) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail Pengaduan Admin</title>
-    <!-- Font Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -64,8 +63,8 @@ if(!$data) {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(10px);
             width: 100%;
-            max-width: 380px; /* Diperkecil dari 500px */
-            padding: 20px; /* Padding diperkecil */
+            max-width: 380px; 
+            padding: 20px; 
             border-radius: 8px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
             border: 1px solid #3b82f6;
@@ -76,19 +75,19 @@ if(!$data) {
             color: #ffffff;
             margin-top: 0;
             margin-bottom: 5px;
-            font-size: 18px; /* Font judul diperkecil */
+            font-size: 18px; 
             font-weight: 700;
             text-transform: uppercase;
         }
 
         .link-kembali {
             text-align: center;
-            margin-bottom: 15px; /* Jarak dikurangin */
+            margin-bottom: 15px; 
         }
         .link-kembali a {
             color: #94a3b8;
             text-decoration: none;
-            font-size: 11px; /* Font diperkecil */
+            font-size: 11px; 
             transition: color 0.3s;
         }
         .link-kembali a:hover {
@@ -98,12 +97,12 @@ if(!$data) {
         table {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 0 6px; /* Jarak antar baris diperkecil */
-            font-size: 12px; /* Font tabel diperkecil */
+            border-spacing: 0 6px;
+            font-size: 12px; 
         }
 
         td {
-            padding: 10px 12px; /* Padding diperkecil */
+            padding: 10px 12px; 
             vertical-align: middle;
         }
 
@@ -112,27 +111,27 @@ if(!$data) {
             color: #94a3b8;
             font-weight: 600;
             width: 35%;
-            border-left: 3px solid #3b82f6; /* Ketebalan dikurangin */
+            border-left: 3px solid #3b82f6; 
             border-radius: 4px 0 0 4px;
             text-transform: uppercase;
-            font-size: 10px; /* Font label diperkecil */
+            font-size: 10px; 
         }
 
         td:last-child {
             background-color: rgba(15, 23, 42, 0.5);
             color: #e2e8f0;
             border-radius: 0 4px 4px 0;
-            word-break: break-word; /* Biar teks panjang ga ngeblur */
+            word-break: break-word; 
         }
 
         select, textarea {
             width: 100%;
-            padding: 6px 8px; /* Padding input diperkecil */
+            padding: 6px 8px; 
             background-color: #0f172a;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             font-family: 'Poppins', sans-serif;
-            font-size: 11px; /* Font input diperkecil */
+            font-size: 11px; 
             color: #fff;
             box-sizing: border-box;
             transition: all 0.3s ease;
@@ -151,12 +150,12 @@ if(!$data) {
 
         button[type="submit"] {
             width: 100%;
-            padding: 8px; /* Padding tombol diperkecil */
+            padding: 8px; 
             background-color: #2563eb;
             color: white;
             border: none;
             border-radius: 4px;
-            font-size: 12px; /* Font tombol diperkecil */
+            font-size: 12px; 
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
