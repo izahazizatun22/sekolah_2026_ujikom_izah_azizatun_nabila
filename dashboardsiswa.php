@@ -46,28 +46,24 @@ body {
     gap: 15px;
 }
 
-/* GANTI header-top */
 .header-atas {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
-
-/* GANTI brand */
+    
 .logo-sekolah {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-/* GANTI brand-logo */
 .logo-img {
     width: 35px; 
     height: auto;
 }
-
-/* GANTI brand-text */
+    
 .nama-sekolah h4 {
     color: #ffffff;
     font-size: 12px; 
@@ -99,14 +95,12 @@ body {
     color: white;
 }
 
-/* GANTI divider */
 .garis {
     width: 100%;
     height: 1px;
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-/* GANTI header-content */
 .judul-dashboard {
     width: 100%;
     text-align: center;
@@ -124,14 +118,12 @@ body {
     font-size: 13px;
 }
 
-/* GANTI pembungkus-menu */
 .menu-container {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
 }
 
-/* GANTI menu-box */
 .menu-item {
     background-color: rgba(30, 41, 59, 0.5);
     backdrop-filter: blur(5px);
@@ -170,7 +162,6 @@ body {
     align-items: center;
 }
 
-/* warna icon tetap sama */
 .box-buat .icon { background-color: #2563eb; }
 .box-cari .icon { background-color: #059669; }
 .box-pw .icon { background-color: #d97706; }
@@ -240,4 +231,5 @@ body {
 </div>
 
 </body>
+
 </html>
