@@ -19,10 +19,8 @@ if (!$row) {
 if(isset($_POST['submit'])) {
     $ket = $_POST['ket_kategori'];
 
-    // Update query
     mysqli_query($koneksi, "UPDATE kategori SET ket_kategori='$ket' WHERE id_kategori='$id'");
 
-    // Arahkan kembali ke halaman list data kategori
     header("Location: tampilkategori.php");
     exit;
 }    
@@ -175,4 +173,5 @@ if(isset($_POST['submit'])) {
 </div>
 
 </body>
+
 </html>
